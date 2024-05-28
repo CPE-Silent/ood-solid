@@ -4,8 +4,8 @@ import { TutorialService } from '../services/tutorial.service';
 
 const tutorialService = new TutorialService();
 
-export class TutorialController {
-  static async create(req: Request, res: Response): Promise<void> {
+class TutorialController {
+  async create(req: Request, res: Response): Promise<void> {
     try {
       const tutorial = await tutorialService.create(req.body);
       res.status(201).json(tutorial);
@@ -14,7 +14,7 @@ export class TutorialController {
     }
   }
 
-  static async findAll(req: Request, res: Response): Promise<void> {
+  async findAll(req: Request, res: Response): Promise<void> {
     try {
       const tutorials = await tutorialService.findAll();
       res.status(200).json(tutorials);
@@ -23,7 +23,7 @@ export class TutorialController {
     }
   }
 
-  static async findAllPublished(req: Request, res: Response): Promise<void> {
+  async findAllPublished(req: Request, res: Response): Promise<void> {
     try {
       const tutorials = await tutorialService.findAllPublished();
       res.status(200).json(tutorials);
@@ -32,7 +32,7 @@ export class TutorialController {
     }
   }
 
-  static async findOne(req: Request, res: Response): Promise<void> {
+  async findOne(req: Request, res: Response): Promise<void> {
     try {
       const tutorial = await tutorialService.findOne(req.params.id);
       if (tutorial) {
@@ -45,7 +45,7 @@ export class TutorialController {
     }
   }
 
-  static async update(req: Request, res: Response): Promise<void> {
+  async update(req: Request, res: Response): Promise<void> {
     try {
       const tutorial = await tutorialService.update(req.params.id, req.body);
       if (tutorial) {
@@ -58,7 +58,7 @@ export class TutorialController {
     }
   }
 
-  static async delete(req: Request, res: Response): Promise<void> {
+  async delete(req: Request, res: Response): Promise<void> {
     try {
       const tutorial = await tutorialService.delete(req.params.id);
       if (tutorial) {
@@ -71,7 +71,7 @@ export class TutorialController {
     }
   }
 
-  static async deleteAll(req: Request, res: Response): Promise<void> {
+  async deleteAll(req: Request, res: Response): Promise<void> {
     try {
       await tutorialService.deleteAll();
       res.status(204).send();
@@ -80,3 +80,5 @@ export class TutorialController {
     }
   }
 }
+
+export default new TutorialController();

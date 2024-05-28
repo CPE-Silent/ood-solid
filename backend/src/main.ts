@@ -3,7 +3,6 @@ import { connectToMongoDB } from './config/db';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import routers from './routers';
-
 import dotenv from 'dotenv';
 dotenv.config();
 

@@ -17,5 +17,6 @@ const tutorialSchema: Schema = new Schema(
 
 export const TutorialModel = mongoose.model<ITutorial>(
   'Tutorial',
-  tutorialSchema
+  tutorialSchema,
+  'Tutorials'
 );
