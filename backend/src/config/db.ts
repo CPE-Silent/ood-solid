@@ -11,7 +11,9 @@ export async function connectToMongoDB() {
         dbName,
       });
     }
-    console.log(`✅ Connected to Database (MongoDB) -> Database Name : ${dbName}`);
+    console.log(
+      `✅ Connected to Database (MongoDB) -> Database Name : ${dbName}`
+    );
   } catch (error) {
     console.log(error);
     process.exit(1);
