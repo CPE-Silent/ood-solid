@@ -25,7 +25,7 @@ export class TutorialsListComponent {
         this.tutorials = data;
         console.log(data);
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
     });
   }
 
@@ -46,7 +46,7 @@ export class TutorialsListComponent {
         console.log(res);
         this.refreshList();
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
     });
   }
 
@@ -59,7 +59,7 @@ export class TutorialsListComponent {
         this.tutorials = data;
         console.log(data);
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
     });
   }
 }

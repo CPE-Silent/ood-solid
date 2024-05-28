@@ -14,7 +14,7 @@ export class TutorialDetailsComponent {
   @Input() currentTutorial: Tutorial = {
     title: '',
     description: '',
-    published: false
+    published: false,
   };
 
   message = '';
@@ -38,7 +38,7 @@ export class TutorialDetailsComponent {
         this.currentTutorial = data;
         console.log(data);
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
     });
   }
 
@@ -46,7 +46,7 @@ export class TutorialDetailsComponent {
     const data = {
       title: this.currentTutorial.title,
       description: this.currentTutorial.description,
-      published: status
+      published: status,
     };
 
     this.message = '';
@@ -59,7 +59,7 @@ export class TutorialDetailsComponent {
           ? res.message
           : 'The status was updated successfully!';
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
     });
   }
 
@@ -75,7 +75,7 @@ export class TutorialDetailsComponent {
             ? res.message
             : 'This tutorial was updated successfully!';
         },
-        error: (e) => console.error(e)
+        error: (e) => console.error(e),
       });
   }
 
@@ -85,7 +85,7 @@ export class TutorialDetailsComponent {
         console.log(res);
         this.router.navigate(['/tutorials']);
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
     });
   }
 }
