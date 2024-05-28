@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ITutorial extends Document {
   title: string;
@@ -6,11 +6,16 @@ export interface ITutorial extends Document {
   published: boolean;
 }
 
-const tutorialSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  published: { type: Boolean, required: true },
-});
+const tutorialSchema: Schema = new Schema(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    published: { type: Boolean, default: false },
+  },
+  { timestamps: true }
+);
 
-const Tutorial = mongoose.model<ITutorial>("Tutorial", tutorialSchema);
-export default Tutorial;
+export const TutorialModel = mongoose.model<ITutorial>(
+  'Tutorial',
+  tutorialSchema
+);
