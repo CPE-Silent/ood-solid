@@ -1,20 +1,20 @@
-# MEAN stack example: CRUD with Angular 16
+# MEAN stack: CRUD with Angular 16
 
 ## Project setup
 
-### Original Node.js Server
+### Backend
 
 ```
-cd node-js-server
+cd backend
 npm install
 ```
 
 Run `npm run dev`
 
-### Angular Client
+### Frontend
 
 ```
-cd angular-16-client
+cd frontend
 npm install
 ```
 
