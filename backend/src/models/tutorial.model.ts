@@ -15,6 +15,13 @@ const tutorialSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+// Adding the toJSON method
+tutorialSchema.method('toJSON', function () {
+  const { __v, _id, ...object } = this.toObject();
+  object.id = _id;
+  return object;
+});
+
 export const TutorialModel = mongoose.model<ITutorial>(
   'Tutorial',
   tutorialSchema,
