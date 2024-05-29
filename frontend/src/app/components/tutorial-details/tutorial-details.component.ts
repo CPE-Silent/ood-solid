@@ -8,7 +8,7 @@ import { Tutorial } from 'src/app/models/tutorial.model';
   templateUrl: './tutorial-details.component.html',
   styleUrls: ['./tutorial-details.component.css'],
 })
-export class TutorialDetailsComponent {
+export class TutorialDetailsComponent implements OnInit {
   @Input() viewMode = false;
 
   @Input() currentTutorial: Tutorial = {
