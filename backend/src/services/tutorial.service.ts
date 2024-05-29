@@ -1,12 +1,12 @@
 import { Tutorial } from '../interfaces/tutorial.interface';
 import { TutorialModel, ITutorial } from '../models/tutorial.model';
-import { TutorialRepository } from '../repositories/tutorial.repository';
+import { Repository } from '../repositories/repository';
 
 export class TutorialService {
-  private repository: TutorialRepository<ITutorial>;
+  private repository: Repository<ITutorial>;
 
   constructor() {
-    this.repository = new TutorialRepository<ITutorial>(TutorialModel);
+    this.repository = new Repository<ITutorial>(TutorialModel);
   }
 
   async create(tutorial: ITutorial): Promise<ITutorial> {

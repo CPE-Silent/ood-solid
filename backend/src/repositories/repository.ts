@@ -1,8 +1,7 @@
-// src/repositories/tutorial.repository.ts
 import { Model, Document } from 'mongoose';
 import { IRepository } from './repository.interface';
 
-export class TutorialRepository<T extends Document> implements IRepository<T> {
+export class Repository<T extends Document> implements IRepository<T> {
   constructor(private model: Model<T>) {}
 
   async create(item: T): Promise<T> {
