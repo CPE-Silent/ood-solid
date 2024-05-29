@@ -1,17 +1,11 @@
 import { Model, Document, FilterQuery } from 'mongoose';
 import {
-  ICreateRepository,
-  IDeleteRepository,
-  IReadRepository,
-  IUpdateRepository,
+  IRepository
 } from './repository.interface';
 
 export class TutorialRepository<T extends Document>
   implements
-    ICreateRepository<T>,
-    IUpdateRepository<T>,
-    IDeleteRepository<T>,
-    IReadRepository<T>
+    IRepository<T>
 {
   constructor(public model: Model<T>) {}
 
