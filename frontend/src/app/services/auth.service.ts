@@ -31,4 +31,18 @@ export class AuthService {
   getUserRole(): string | null {
     return localStorage.getItem('role');
   }
+
+  register(
+    name: string,
+    role: string,
+    email: string,
+    password: string
+  ): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/auth/register`, {
+      name,
+      role,
+      email,
+      password,
+    });
+  }
 }
