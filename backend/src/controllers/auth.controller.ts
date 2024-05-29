@@ -1,9 +1,9 @@
-import e, { RequestHandler, Request, Response } from 'express';
+import { RequestHandler, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import UserModel, { IUser } from '../models/user.model';
 
-class UserController {
+class AuthController {
   register: RequestHandler = async (req: Request, res: Response) => {
     const { name, email, password, role } = req.body;
 
@@ -50,7 +50,7 @@ class UserController {
         return res.status(401).json({ message: 'Invalid Password' });
       }
 
-      const token = jwt.sign({ userId: user.email }, process.env.JWT_SECRET || '', {
+      const token = jwt.sign({ userId: user.email, role: user.role }, process.env.JWT_SECRET || '', {
         expiresIn: '8h',
       });
 
@@ -67,4 +67,4 @@ class UserController {
   };
 }
 
-export default new UserController();
+export default new AuthController();

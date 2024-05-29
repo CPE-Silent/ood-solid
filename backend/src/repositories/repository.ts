@@ -4,8 +4,8 @@ import { IRepository } from './repository.interface';
 export class Repository<T extends Document> implements IRepository<T> {
   constructor(private model: Model<T>) {}
 
-  async create(item: T): Promise<T> {
-    return await this.model.create(item);
+  async create(item: Object): Promise<T> {
+    return await this.model.create(item); 
   }
 
   async findAll(): Promise<T[]> {

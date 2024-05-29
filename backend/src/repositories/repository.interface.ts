@@ -1,5 +1,6 @@
 // src/repositories/repository.interface.ts
-export interface IRepository<T> {
+import { Document } from 'mongoose';
+export interface IRepository<T extends Document> {
   create(item: T): Promise<T>;
   findAll(): Promise<T[]>;
   findById(id: string): Promise<T | null>;
