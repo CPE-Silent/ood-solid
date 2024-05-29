@@ -1,16 +1,42 @@
-import { Model, Document } from 'mongoose';
-import { Repository } from './repository';
+import { Model, Document, FilterQuery } from 'mongoose';
+import {
+  ICreateRepository,
+  IDeleteRepository,
+  IReadRepository,
+  IUpdateRepository,
+} from './repository.interface';
 
-export class TutorialRepository<T extends Document> extends Repository<T> {
-	constructor(private tutorialModel: Model<T>) {
-		super(tutorialModel);
-	}
+export class TutorialRepository<T extends Document>
+  implements
+    ICreateRepository<T>,
+    IUpdateRepository<T>,
+    IDeleteRepository<T>,
+    IReadRepository<T>
+{
+  constructor(public model: Model<T>) {}
 
-	async findAll(condition: any): Promise<T[]> {
-		try {
-			return await this.tutorialModel.find(condition || {}).exec();
-		} catch (err) {
-			throw new Error('Some error occurred while retrieving tutorials.');
-		}
-	}
+  async create(item: Object): Promise<T> {
+    return await this.model.create(item);
+  }
+
+  async findAll(condition?: FilterQuery<T>): Promise<T[]> {
+    return await this.model.find(condition || {}).exec();
+  }
+
+  async findById(id: string): Promise<T | null> {
+    return await this.model.findById(id).exec();
+  }
+
+  async update(id: string, item: Partial<T>): Promise<T | null> {
+    return await this.model.findByIdAndUpdate(id, item, { new: true }).exec();
+  }
+
+  async delete(id: string): Promise<boolean> {
+    const result = await this.model.deleteOne({ _id: id }).exec();
+    return result.deletedCount !== 0;
+  }
+
+  async deleteAll(): Promise<void> {
+    await this.model.deleteMany({}).exec();
+  }
 }

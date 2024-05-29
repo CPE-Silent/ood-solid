@@ -1,7 +1,11 @@
 import { Router } from 'express';
-import TutorialController from '../controllers/tutorial.controller';
-import { AuthTokenMiddleware, UserExistsMiddleware } from '../middlewares/auth.middleware';
+import { TutorialController } from '../controllers/tutorial.controller';
+import {
+  AuthTokenMiddleware,
+  UserExistsMiddleware,
+} from '../middlewares/auth.middleware';
 
+const tutorialController = new TutorialController();
 const userExists = new UserExistsMiddleware();
 const authToken = new AuthTokenMiddleware();
 
@@ -11,11 +15,11 @@ export default (router: Router) => {
   router.use('/users', (req, res, next) => {
     authToken.handle(req, res, next);
   });
-  router.post('/tutorial', TutorialController.create);
-  router.get('/tutorial', TutorialController.findAll);
-  router.get('/tutorial/published', TutorialController.findAllPublished);
-  router.get('/tutorial/:id', TutorialController.findOne);
-  router.put('/tutorial/:id', TutorialController.update);
-  router.delete('/tutorial/:id', TutorialController.delete);
-  router.delete('/tutorial', TutorialController.deleteAll);
+  router.post('/tutorial', tutorialController.create);
+  router.get('/tutorial', tutorialController.findAll);
+  router.get('/tutorial/published', tutorialController.findAllPublished);
+  router.get('/tutorial/:id', tutorialController.findOne);
+  router.put('/tutorial/:id', tutorialController.update);
+  router.delete('/tutorial/:id', tutorialController.delete);
+  router.delete('/tutorial', tutorialController.deleteAll);
 };

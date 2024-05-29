@@ -4,6 +4,8 @@ export interface ITutorial extends Document {
   title: string;
   description: string;
   published: boolean;
+  special: boolean;
+  specialAuthor?: string;
 }
 
 const tutorialSchema: Schema = new Schema(
@@ -11,11 +13,12 @@ const tutorialSchema: Schema = new Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     published: { type: Boolean, default: false },
+    special: { type: Boolean, default: false },
+    specialAuthor: { type: String },
   },
   { timestamps: true }
 );
 
-// Adding the toJSON method
 tutorialSchema.method('toJSON', function () {
   const { __v, _id, ...object } = this.toObject();
   object.id = _id;
