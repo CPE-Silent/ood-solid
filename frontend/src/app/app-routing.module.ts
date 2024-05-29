@@ -5,6 +5,7 @@ import { TutorialDetailsComponent } from './components/tutorial-details/tutorial
 import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth.guard';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'tutorials', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   },
   { path: 'add', component: AddTutorialComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: UserRegisterComponent },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
