@@ -1,5 +1,5 @@
 import express from 'express';
-import { connectToMongoDB } from './config/db';
+import connectDB from './config/db';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import routers from './routers';
@@ -25,5 +25,5 @@ const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {
   console.log(`🚀 Listening at http://localhost:${port}`);
 });
-connectToMongoDB();
+connectDB();
 server.on('error', console.error);

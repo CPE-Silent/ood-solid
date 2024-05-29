@@ -1,34 +1,47 @@
-import mongoose from 'mongoose';
+import mongoose, { Connection } from 'mongoose';
 
-export async function connectToMongoDB() {
-  const dbName = process.env.DB_NAME;
+export class Database {
+  private static instance: Database;
+  private connection: any;
 
-  const Uri = process.env.DB_URI;
-
-  try {
-    if (Uri) {
-      await mongoose.connect(Uri, {
-        dbName,
-      });
-    }
-    console.log(
-      `✅ Connected to Database (MongoDB) -> Database Name : ${dbName}`
-    );
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
+  private constructor() {
+    this.connection = null;
   }
 
-  mongoose.connection.on('connected', () => {
-    console.log('✅ Connected to Database (MongoDB)');
-  });
+  static getInstance(): Database {
+    if (!Database.instance) {
+      Database.instance = new Database();
+    }
+    return Database.instance;
+  }
 
-  mongoose.connection.on('error', (error) => {
-    console.log(error);
-    process.exit(1);
-  });
+  async connect(): Promise<void> {
+    try {
+      if (!this.connection) {
+        const mongoURI = process.env.DB_URI || '';
+        const dbName = process.env.DB_NAME || '';
 
-  mongoose.connection.on('disconnected', () => {
-    console.log('❌ Disconnected from Database (MongoDB)');
-  });
+        this.connection = await mongoose.connect(mongoURI, {
+          dbName,
+        });
+
+        console.log(
+          `✅ Connected to Database (MongoDB) - Database Name : ${dbName}`
+        );
+      }
+    } catch (error) {
+      console.error('MongoDB connection error:', error);
+      process.exit(1);
+    }
+  }
+
+  getConnection(): Connection | null {
+    return this.connection;
+  }
+}
+
+const database = Database.getInstance();
+
+export default async function connectDB(): Promise<void> {
+  await database.connect();
 }
