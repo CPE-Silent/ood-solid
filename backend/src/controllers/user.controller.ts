@@ -1,65 +1,54 @@
-import UserModel, { IUser } from '../models/user.model';
+// src/controllers/user.controller.ts
 import { RequestHandler, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
+import { ErrorHandler } from '../middlewares/errorHandler.middlerware';
 
 const userService = new UserService();
 
 class UserController {
-  getAll: RequestHandler = async (req: Request, res: Response) => {
-    try {
-      const users = await userService.getAllUsers();
-      res.status(200).json(users);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
+  @ErrorHandler()
+  async getAll(req: Request, res: Response): Promise<void> {
+    const users = await userService.getAllUsers();
+    res.status(200).json(users);
   }
 
-  getUserByEmail: RequestHandler = async (req: Request, res: Response) => {
-    try {
-      const user = await userService.getUserByEmail(req.params.email);
+  @ErrorHandler()
+  async getUserByEmail(req: Request, res: Response): Promise<void> {
+    const user = await userService.getUserByEmail(req.params.email);
+    if (user) {
       res.status(200).json(user);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    } else {
+      res.status(404).json({ message: 'User not found' });
     }
   }
 
-  getUserById: RequestHandler = async (req: Request, res: Response) => {
-    try {
-      console.log('Here');
-      const user = await userService.getUserById(req.params.id);
+  @ErrorHandler()
+  async getUserById(req: Request, res: Response): Promise<void> {
+    const user = await userService.getUserById(req.params.id);
+    if (user) {
       res.status(200).json(user);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    } else {
+      res.status(404).json({ message: 'User not found' });
     }
   }
 
-  createUser: RequestHandler = async (req: Request, res: Response) => {
-    try {
-      const newUser = await userService.createUser(req.body);
-      res.status(201).json(newUser);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
+  @ErrorHandler()
+  async createUser(req: Request, res: Response): Promise<void> {
+    const newUser = await userService.createUser(req.body);
+    res.status(201).json(newUser);
   }
 
-  updateUser: RequestHandler = async (req: Request, res: Response) => {
-    try {
-      const updatedUser = await userService.updateUser(req.params.id, req.body);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
+  @ErrorHandler()
+  async updateUser(req: Request, res: Response): Promise<void> {
+    const updatedUser = await userService.updateUser(req.params.id, req.body);
+    res.status(200).json(updatedUser);
   }
 
-  deleteUser: RequestHandler = async (req: Request, res: Response) => {
-    try {
-      await userService.deleteUser(req.params.id);
-      res.status(204).json();
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
+  @ErrorHandler()
+  async deleteUser(req: Request, res: Response): Promise<void> {
+    await userService.deleteUser(req.params.id);
+    res.status(204).json();
   }
-
 }
 
 export default new UserController();
