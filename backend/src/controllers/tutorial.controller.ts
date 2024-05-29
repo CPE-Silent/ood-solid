@@ -2,8 +2,11 @@
 import { Request, Response } from 'express';
 import { TutorialService } from '../services/tutorial.service';
 import { ErrorHandler } from '../middlewares/errorHandler.middlerware';
+import { TutorialModel, ITutorial } from '../models/tutorial.model';
+import { TutorialRepository } from '../repositories/tutorial.repository';
 
-const tutorialService = new TutorialService();
+const tutorialRepository = new TutorialRepository<ITutorial>(TutorialModel);
+const tutorialService = new TutorialService(tutorialRepository);
 
 export class TutorialController {
   @ErrorHandler()
