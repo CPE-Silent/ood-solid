@@ -20,6 +20,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('email');
     this.router.navigate(['/login']); // Redirect to login page
   }
 

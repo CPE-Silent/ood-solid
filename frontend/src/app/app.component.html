@@ -9,7 +9,10 @@
         <a routerLink="add" class="nav-link">Add</a>
       </li>
     </div>
-    <button class="m-3 btn btn-sm btn-danger" (click)="logout()">Logout</button>
+    <div *ngIf="isLoggedIn" class="navbar-nav">
+      <span class="navbar-text text-white mr-3">{{ userEmail }}</span>
+      <button class="btn btn-sm btn-danger" (click)="logout()">Logout</button>
+    </div>
   </nav>
 
   <div class="container mt-3">

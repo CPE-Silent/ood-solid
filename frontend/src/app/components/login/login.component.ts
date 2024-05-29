@@ -18,6 +18,7 @@ export class LoginComponent {
       next: (res) => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('role', res.role);
+        localStorage.setItem('email', res.email);
         this.router.navigate(['/']);
       },
       error: (e) => console.error(e),
