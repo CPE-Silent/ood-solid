@@ -1,44 +1,71 @@
 import { Tutorial } from '../interfaces/tutorial.interface';
 import { TutorialModel, ITutorial } from '../models/tutorial.model';
-import { Repository } from '../repositories/repository';
+import { TutorialRepository } from '../repositories/tutorial.repository';
+
+const tutorialRepository = new TutorialRepository<ITutorial>(TutorialModel);
 
 export class TutorialService {
-  private repository: Repository<ITutorial>;
+	async create(tutorial: ITutorial) {
+		try {
+			const newTutorial = await tutorialRepository.create(tutorial);
+			return newTutorial;
+		} catch (error) {
+			console.log(error);
+			(error as any).status = 502;
+			throw error;
+		}
+	}
 
-  constructor() {
-    this.repository = new Repository<ITutorial>(TutorialModel);
-  }
+	async findAll(req: any) {
+		try {
+			const title = req.query.title;
+			const condition = title ? { title: { $regex: new RegExp(title), $options: 'i' } } : {};
+			const tutorials = await tutorialRepository.findAll(condition);
+			return tutorials;
+		} catch (err) {
+			throw new Error('Some error occurred while retrieving tutorials.');
+		}
+	}
 
-  async create(tutorial: ITutorial): Promise<ITutorial> {
-    return await this.repository.create(tutorial);
-  }
+	async findAllPublished() {
+		try {
+			const condition = { published: true };
+			const tutorials = await tutorialRepository.findAll(condition);
+			return tutorials;
+		} catch (err) {
+			throw new Error('Some error occurred while retrieving tutorials.');
+		}
+	}
 
-  async findAll(): Promise<ITutorial[]> {
-    return await this.repository.findAll();
-  }
+	async findOne(id: string) {
+		try {
+			const tutorials = await tutorialRepository.findById(id);
+			return tutorials;
+		} catch (err) {
+			throw new Error('Some error occurred while retrieving tutorials.');
+		}
+	}
 
-  async findAllPublished(): Promise<ITutorial[]> {
-    return (await this.repository.findAll()).filter(
-      (tutorial) => tutorial.published
-    );
-  }
+	async update(id: string, tutorial: Partial<Tutorial>): Promise<ITutorial | null> {
+		const tutorials = await tutorialRepository.update(id, tutorial);
+		return tutorials;
+	}
 
-  async findOne(id: string): Promise<ITutorial | null> {
-    return await this.repository.findById(id);
-  }
+	async delete(id: string): Promise<boolean> {
+		try {
+			const tutorials = await tutorialRepository.delete(id);
+			return tutorials;
+		} catch (err) {
+			throw new Error('Some error occurred while deleting tutorials.');
+		}
+	}
 
-  async update(
-    id: string,
-    tutorial: Partial<Tutorial>
-  ): Promise<ITutorial | null> {
-    return await this.repository.update(id, tutorial);
-  }
-
-  async delete(id: string): Promise<boolean> {
-    return await this.repository.delete(id);
-  }
-
-  async deleteAll(): Promise<void> {
-    await this.repository.deleteAll();
-  }
+	async deleteAll(): Promise<void> {
+		try {
+			const tutorials = await tutorialRepository.deleteAll();
+			return tutorials;
+		} catch (err) {
+			throw new Error('Some error occurred while deleting all tutorials.');
+		}
+	}
 }
