@@ -1,5 +1,6 @@
 import { Component, DoCheck } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent implements DoCheck {
   isLoggedIn: boolean = false;
   userEmail: string | null = null;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.userEmail = localStorage.getItem('email');
   }
@@ -25,5 +26,9 @@ export class AppComponent implements DoCheck {
     this.authService.logout();
     this.isLoggedIn = false;
     this.userEmail = null;
+  }
+
+  goLogin() {
+    this.router.navigate(['/login']);
   }
 }
